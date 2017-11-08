@@ -1,0 +1,5 @@
+{'train_manual_and_augmented': u'Pełny zbiór uczący + dopisane znaki + dogenerowane dane (5225)',
+'train_and_manual':           u'Pełny zbiór uczący + dopisane znaki (1725)',
+'full_train':                 u'Pełny zbiór uczący (1325)',
+'two_thirds_train':           u'2/3 zbioru uczącego (887)',
+'one_third_train':            u'1/3 zbioru uczącego (437)'}

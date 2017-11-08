@@ -1,0 +1,73 @@
+execution_plan:
+    - training_mode
+#    - testing_mode
+#    - user_mode
+
+repetitions: 10
+
+model_config:
+    layers:
+        - nb_neurons: 70
+
+        - nb_neurons:  50
+          activation:  Softplus
+          bias:        True
+          initializer: default
+
+#        - nb_neurons:  20
+#          activation:  Softplus
+#          bias:        True
+#          initializer: lecture_initializer
+
+        - nb_neurons:  10
+          activation:  Sigmoid
+          bias:        True
+          initializer: default
+
+training_mode:
+    use_augmented_data: True
+    use_self_generated_data: True
+    part_of_data: 1.0
+
+    train_from_epoch: 0
+    load_model_filepath: ./serialized_models/model.pkl
+    save_model_filepath: ./serialized_models/model_trash.pkl
+
+    loss: Crossentropy
+
+    optimizer:
+        name:              SGD
+        train_coefficient: 0.003
+        max_epochs:        50
+        batch_size:        10
+        momentum:
+            use:   False
+            coeff: 0.7
+
+        callbacks:
+            log_progress:
+                use: True
+            early_stopping:
+                use:       False
+                patience:  20
+                best_only: True
+            log_csv:
+                use:      True
+                log_path: ./logs/learn_coeff_tests/coeff_0_003/trial.csv
+                log_time: True
+
+
+testing_mode:
+    model_filepath: ./serialized_models/model2.pkl
+    test_data_path: ./data/val/
+
+user_mode:
+    model_filepath: ./serialized_models/model2.pkl
+    nb_trials: 15
+
+
+
+
+
+
+
