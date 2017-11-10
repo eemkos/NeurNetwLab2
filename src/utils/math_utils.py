@@ -246,3 +246,4 @@ def ln(matrix):
     eps = 0.00001
     return np.log(matrix+eps)
 
+

@@ -1,68 +1,71 @@
 execution_plan:
-    - training_mode
-#    - testing_mode
-#    - user_mode
+    #- training_mode
+    - testing_mode
+    #- user_mode
 
-repetitions: 10
+repetitions: None
 
 model_config:
     layers:
         - nb_neurons: 70
 
-        - nb_neurons:  50
-          activation:  Softplus
+        - nb_neurons:  200 #150 #50
+          activation:  Swish
           bias:        True
-          initializer: default
+          initializer: he_normal
 
-#        - nb_neurons:  20
-#          activation:  Softplus
-#          bias:        True
-#          initializer: lecture_initializer
+        - nb_neurons:  150 #50 #30
+          activation:  Swish
+          bias:        True
+          initializer: he_normal
 
         - nb_neurons:  10
-          activation:  Sigmoid
+          activation:  Softmax
           bias:        True
-          initializer: default
+          initializer: bengio_sigm
 
 training_mode:
-    use_augmented_data: True
-    use_self_generated_data: True
+    use_augmented_data: False
+    use_self_generated_data: False
     part_of_data: 1.0
 
-    train_from_epoch: 0
-    load_model_filepath: ./serialized_models/model.pkl
-    save_model_filepath: ./serialized_models/model_trash.pkl
+    train_from_epoch: 30
+    load_model_filepath: ./serialized_models/swish_93_08_acc.pkl
+    save_model_filepath: ./serialized_models/swish_93_08_acc.pkl
 
     loss: Crossentropy
 
     optimizer:
         name:              SGD
-        train_coefficient: 0.003
-        max_epochs:        50
-        batch_size:        10
+        train_coefficient: 0.01
+        max_epochs:        100
+        batch_size:        30
         momentum:
+            use:   True
+            coeff: 0.9
+        regularisation:
             use:   False
-            coeff: 0.7
+            coeff: 0.001
 
         callbacks:
             log_progress:
                 use: True
             early_stopping:
-                use:       False
+                use:       True
                 patience:  20
                 best_only: True
             log_csv:
                 use:      True
-                log_path: ./logs/learn_coeff_tests/coeff_0_003/trial.csv
-                log_time: True
+                log_path: ./logs/run/run1_pt3.csv
+                log_time: False
 
 
 testing_mode:
-    model_filepath: ./serialized_models/model2.pkl
+    model_filepath: ./serialized_models/89_26_acc.pkl
     test_data_path: ./data/val/
 
 user_mode:
-    model_filepath: ./serialized_models/model2.pkl
+    model_filepath: ./serialized_models/swish_93_32_acc.pkl
     nb_trials: 15
 
 

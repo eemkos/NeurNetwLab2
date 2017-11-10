@@ -3,8 +3,8 @@ import numpy as np
 from src.utils.digit_painter import PaintWindow
 
 SMPL_PER_CLASS = 40
-ALREADY_CREATED_PER_CLASS = 40
-FILENAME = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2/data/my_generated/%d/%d.png'
+ALREADY_CREATED_PER_CLASS = 0
+FILENAME = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2/data/my_generated2/%d/%d.png'
 
 for num in range(10):
     for i in range(SMPL_PER_CLASS):

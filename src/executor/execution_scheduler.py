@@ -12,7 +12,7 @@ repetition = 0
 
 def run():
     global repetition
-    if config['repetitions'] is None:
+    if config['repetitions'] == 'None':
         rep = 1
     else:
         rep = config['repetitions']
@@ -32,11 +32,14 @@ def test():
     tc = config['testing_mode']
     model = Model.load_model(tc['model_filepath'])
 
-    x, y= prepare_data(val_data())
+    x, y= prepare_data(val_data(tc['test_data_path']))
 
     print("Val Data Len:", len(x))
 
     out = model.feedforward(x)
+    #print(np.argmax(out, axis=1))
+    #for i in range(len(out)):
+    #    print(np.argmax(out[i, :]))
     acc = accuracy(y, out)
 
     print("Accuracy: %f" % acc, '%')
@@ -85,8 +88,10 @@ def continue_training(tr_conf):
     optimizer = parse_optimizer(model, loss, tr_conf['optimizer'], repetition)
 
     x_tr, y_tr = prepare_data(train_data(use_augmented=tr_conf['use_augmented_data'],
-                                            use_manually_generated=tr_conf['use_self_generated_data']))
+                                         use_manually_generated=tr_conf['use_self_generated_data']))
     x_val, y_val = prepare_data(val_data())
+    print('Train data len: ', len(x_tr))
+    print('Val data len: ', len(x_val))
 
     optimizer.train(x_tr, y_tr, x_val, y_val)
     model.save_model(tr_conf['save_model_filepath'], True)
@@ -94,6 +99,7 @@ def continue_training(tr_conf):
 
 def prepare_data(data, data_part=1.0):
     x, y_lbl = data
+    #y_lbl = np.asarray([0,1,2,3,4,5,6,7,8,9]*3)
     y = np.zeros((len(y_lbl), 10))
     y[np.arange(len(y_lbl)), y_lbl.flatten().astype(int)] = 1
 

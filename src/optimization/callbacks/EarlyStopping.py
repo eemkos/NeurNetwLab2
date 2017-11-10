@@ -27,7 +27,6 @@ class EarlyStopping(BaseCallback):
 
     def on_epoch_finished(self, model, optimizer, x_train, y_train, x_val, y_val):
         self.val_losses_history.append(optimizer.current_val_loss)
-
         self.weights_history.append(self.copy_weights(model))
 
         if len(self.val_losses_history) > self.patience:
@@ -49,6 +48,7 @@ class EarlyStopping(BaseCallback):
                 minloss = self.val_losses_history[i]
                 minind = i
 
+        print('Restored weights from epoch %d'%(minind))
         best_weights = self.weights_history[minind]
 
         for l in range(len(model.layers)):

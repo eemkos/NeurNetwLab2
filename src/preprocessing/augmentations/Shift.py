@@ -22,7 +22,7 @@ class Shift(Operation):
         image = self._shift_horizontal(image, shift_horizontal)
         image = self._shift_vertical(image, shift_vertical)
 
-        return Image.fromarray(np.uint8(image)).convert('1')
+        return Image.fromarray(np.uint8(image)).convert('L')
 
     @staticmethod
     def _shift_horizontal(image, shift_horizontal):

@@ -7,7 +7,7 @@ EXPECTED_IMAGE_NUMPY_SHAPE = (10, 7)
 EXPECTED_IMAGE_SHAPE = (7, 10)
 
 TRAIN_DIR = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2data/train/'
-AUGM_DIR = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2data/augmented/'
+AUGM_DIR = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2data/augmented_2/'
 VAL_DIR = 'C:/Users/eemko/OneDrive/PWr/Semestr VII/Sieci Neuronowe/Lab/Lab2data/val/'
 
 

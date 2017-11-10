@@ -17,11 +17,9 @@ def summarise_results(dirpath):
     summarise.to_csv(dirpath+'summary.csv', index=False)
 
 
-'''
 for experiment in os.listdir('../../logs/'):
-    for setting in os.listdir('../../logs/%s/'%experiment):
-        summarise_results('../../logs/%s/%s/' % (experiment, setting))
-'''
-
-summarise_results('../../logs/%s/%s/' % ('learn_coeff_tests', 'coeff_0_001'))
+    if '.' not in experiment:
+        for setting in os.listdir('../../logs/%s/'%experiment):
+            if '.' not in setting:
+                summarise_results('../../logs/%s/%s/' % (experiment, setting))
 

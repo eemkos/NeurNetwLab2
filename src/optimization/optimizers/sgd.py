@@ -1,6 +1,6 @@
 from src.optimization.callbacks.EpochLossCalculationCallback import EpochLossCalculationCallback
 from src.optimization.momentum.NoMomentum import NoMomentum
-from src.utils.math_utils import mult, dot, div, transpose, subtract
+from src.utils.math_utils import mult, dot, div, transpose, subtract, add
 from src.utils.training_utils import accuracy
 from src.utils.training_utils import shuffle_data
 
@@ -11,7 +11,8 @@ class StochasticGradientDescent:
                  starting_epoch=0, max_epochs=10,
                  batch_size=32,
                  callbacks=[],
-                 momentum=NoMomentum()):
+                 momentum=NoMomentum(),
+                 regularisation_rate=0.0):
 
         self.train_coeff = train_coeff
         self.model = model
@@ -26,6 +27,7 @@ class StochasticGradientDescent:
         self.nb_epochs = max_epochs
 
         self.momentum = momentum
+        self.regularisation_rate=regularisation_rate
         self.should_stop = False
 
         self.current_val_loss = 0
@@ -75,16 +77,21 @@ class StochasticGradientDescent:
             for callback in self.callbacks:
                 callback.on_epoch_finished(self.model, self, x_train, y_train, x_val, y_val)
 
+
         for callback in self.callbacks:
             callback.on_training_finished(self.model, self, x_train, y_train, x_val, y_val)
 
     def update_weights(self, batch_size, momentum):
+        r = self.train_coeff * self.regularisation_rate
+
         for layer in self.model.layers[1:]:
             modif = transpose(div(mult(self.train_coeff,
                                        dot(transpose(layer.last_errors),
                                            layer.last_inputs)),
                                   batch_size))
             mmntm = momentum.momentum(layer)
+            regul = r * layer.weights
 
             layer.subtr_from_weights(subtract(modif, mmntm))
+            layer.subtr_from_weights(regul)
 

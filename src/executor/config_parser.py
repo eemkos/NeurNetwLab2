@@ -23,6 +23,7 @@ def parse_loss(model, tr_conf):
 def parse_optimizer(model, loss, opt_conf, repetition):
     callbacks = parse_callbacks(opt_conf['callbacks'], repetition)
     momentum = parse_momentum(opt_conf['momentum'])
+    regul_rate = opt_conf['regularisation']['coeff'] if opt_conf['regularisation']['use'] else 0.0
 
     if opt_conf['name'] == 'SGD':
         return SGD(train_coeff=opt_conf['train_coefficient'],
@@ -31,7 +32,8 @@ def parse_optimizer(model, loss, opt_conf, repetition):
                    max_epochs=opt_conf['max_epochs'],
                    batch_size=opt_conf['batch_size'],
                    momentum=momentum,
-                   callbacks=callbacks)
+                   callbacks=callbacks,
+                   regularisation_rate=regul_rate)
 
 
 def parse_callbacks(cbk_conf, repetition):

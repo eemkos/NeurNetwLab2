@@ -50,4 +50,4 @@ class ElasticTransform(Operation):
 
 
         # Return the image so that it can further processed in the pipeline:
-        return Image.fromarray(np.uint8(image)).convert('1')
+        return Image.fromarray(np.uint8(image)).convert('L')
